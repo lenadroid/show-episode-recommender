@@ -106,11 +106,17 @@ export CONTAINER_REGISTRY="..."
 ./bin/docker-image-tool.sh -r $CONTAINER_REGISTRY -t recommendations-first-season push
 ```
 
-# Submission of a Spark job
+## Submission of a Spark job
 
 Start Kubernetes proxy.
 ```
 kubectl proxy
+```
+
+### Choose a keyword
+
+```
+export KEYWORD="tyrion"
 ```
 
 ### Let's run a job!
@@ -123,5 +129,5 @@ $SPARK_HOME/bin/spark-submit  \
 --class org.apache.spark.examples.GoTEpisodeRecommender  \
 --conf spark.executor.instances=2  \
 --conf spark.kubernetes.container.image=$CONTAINER_REGISTRY/spark:recommendations-first-season \
-local:///opt/spark/jars/GoTEpisodeRecommender-assembly-0.1.0.jar stark
+local:///opt/spark/jars/GoTEpisodeRecommender-assembly-0.1.0.jar $KEYWORD
 ```
